@@ -1,0 +1,30 @@
+name: the name of the product
+main_category: the main category of the product belong
+sub_category: the sub category of the product belong
+image: the link image of the product look like
+link: the amazon website reference link of the product
+ratings: the ratings given by amazon customers of the product
+no of ratings: the number of ratings given to this product in amazon shopping
+discount_price: the discount prices of the product
+actual_price: the actual MRP of the product
+
+
+sản phẩm cùng tên -> khác nhau về giá bán, giá giảm, no of ratings, ratings (?cùng 1 sản phẩm nhưng khác màu?)
+sản phẩm cùng tên -> khác category & sub category -> giống giá bán, giá giảm, no of ratings, ratings
+
+
+tìm sản phẩm -> gộp những dòng có [link & name giống nhau ->  giá bán, giá giảm & ratings, no of ratings bằng nhau] -> gom lại thành 1
+		 -> thu được những dòng CÙNG NAME nhưng [giá bán, giá giảm & ratings, no of ratings khác nhau]
+		 -> SUM "no of ratings"
+-> tương quan category, sub category, giá bán, giá giảm -> lý do bán chạy, bán ế
+
+
+** việc random một giá trị bán hàng ("profit") mà không có một tỷ lệ cụ thể có thể dẫn đến sự chênh lệch đáng kể
+Việc lựa chọn target_profit_linear_scaling làm cận lớn nhất cho target_sum là để đảm bảo rằng số lượng bán được (profits) không vượt quá một giới hạn hợp lý dựa trên số lượt đánh giá (no_of_ratings) và sự biến động trung bình (avg_per_sub) trong một danh mục sản phẩm cụ thể.
+
+Dựa trên Thông Tin Hiện Có: Bạn đã chọn sử dụng tỷ lệ giữa số lượt đánh giá của sản phẩm hiện tại và lượt đánh giá trung bình theo danh mục (target_profit_linear_scaling). Điều này giúp tạo ra một ước lượng cân đối về mức độ nổi tiếng của sản phẩm so với trung bình của danh mục đó.
+
+Giới Hạn Tăng Trưởng: Bạn giới hạn scaling_factor không vượt quá một giá trị cố định (max_scaling_factor). Điều này giúp ngăn chặn việc tăng quá mức số lượng bán được dựa trên số lượt đánh giá, để giữ cho giá trị càng thực tế hơn và không quá chệch lệch.
+
+Không Cho Phép Các Giá Trị Quá Lớn: Khi bạn sử dụng target_profit_linear_scaling để tạo target_sum, bạn đảm bảo rằng giá trị này không quá lớn, tránh tình trạng số lượng bán được (profits) quá cao so với số lượt đánh giá.
+Tóm lại, việc sử dụng target_profit_linear_scaling là một cách để giữ cho quá trình random của bạn dựa trên thông tin thực tế và hợp lý, không tạo ra các giá trị quá lớn không đáng kỳ vọng trong ngữ cảnh của số lượng đánh giá và sự biến động trung bình.
